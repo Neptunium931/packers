@@ -1,0 +1,33 @@
+[package]
+name = "packers"
+description = ""
+version = "0.1.0"
+authors = ""
+
+[dependencies]
+argparse = { git = "https://github.com/p-ranav/argparse", branch = "master" }
+
+[build]
+build-dir = "build"
+build-dir-debug = "build/debug"
+build-dir-release = "build/release"
+
+[build.env]
+CC = "gcc"
+CXX = "g++"
+
+[build.debug.env]
+CC = "clang"
+CXX = "clang++"
+
+[build.args]
+"-Wall"
+"-Wextra"
+
+[build.args.debug]
+"-g"
+"-O0"
+
+[build.release.args]
+"-O3"
+"-Werror"

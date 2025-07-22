@@ -1,0 +1,12 @@
+[
+    {
+        "command": "c++ -c -std=c++23 -Wall -Wextra -O0 -g -I ./build/build-debug/dependencies/argparse/include -I ./build/build-debug/dependencies/tomlplusplus/include -I ./src -o build/build-debug/packers.cpp.o src/packers.cpp",
+        "directory": "/home/neptunium/dev/packers",
+        "file": "/home/neptunium/dev/packers/src/packers.cpp"
+    },
+    {
+        "command": "c++ -c -std=c++23 -Wall -Wextra -O0 -g -I ./build/build-debug/dependencies/argparse/include -I ./build/build-debug/dependencies/tomlplusplus/include -I ./src -o build/build-debug/project/file.cpp.o src/project/file.cpp",
+        "directory": "/home/neptunium/dev/packers",
+        "file": "/home/neptunium/dev/packers/src/project/file.cpp"
+    }
+]

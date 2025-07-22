@@ -1,0 +1,42 @@
+[package]
+name = "name of package"
+description = ""
+version = "0.1.0"
+authors = ""
+
+[dependencies]
+foo = { path = "path/to/foo" }
+bar = { git = "git url", branch = "branch name"  } # branch or tag
+baz = { tarball = "url to tarball" dir = "name of directory" }
+# libabc = "1.0.0" # TODO custon resgitry
+
+[dependencie.foo]
+backend = "autoTool" # packers cmake, meson, ninja, autoTool
+configure-Commands = ["configure"]
+configure-Args = [""]
+build-Commands = ["make"]
+install-Commands = ["make install"]
+env = { a = "value of a" }
+
+[build]
+build-dir = "build"
+build-dir-debug = "build/debug"
+build-dir-release = "build/release"
+build-dir-* = "build/{build.profile}"
+
+[build.env]
+# by default find
+CC = "gcc"
+CXX = "g++"
+
+[build.args]
+"-Wall"
+"-Wextra"
+
+[build.args.debug]
+"-g"
+"-O0"
+
+[build.args.release]
+"-O3"
+"-Werror"

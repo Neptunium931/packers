@@ -39,4 +39,8 @@ Test(files, parsePackageSectionOptional)
   auto const &pkg = package.value();
   cr_assert_eq(pkg.name, "name of package");
   cr_assert_eq(pkg.version, "0.1.0");
+  cr_assert_eq(pkg.description, "");
+  cr_assert_eq(pkg.authors, "");
 }
+
+// Test(files, parse)

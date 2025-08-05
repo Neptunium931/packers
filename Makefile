@@ -9,10 +9,14 @@ CriterionFLAGS = -lcriterion
 file := src/packers.cpp \
 				src/project/file.cpp
 obj := $(file:.cpp=.cpp.o)
-obj := $(obj:src/%=build/build-debug/%)
+obj := $(obj:src/%=build/build-debug/src/%)
 
-packers-test := tests/packers-test.cpp \
+packers-test-src := tests/packers-test.cpp \
+								tests/executorTest.cpp \
 								src/project/file.cpp
+packers-test2 = $(packers-test-src:.cpp=.cpp.o)
+packers-test1 = $(packers-test2:tests/%=build/build-debug/tests/%)
+packers-test = $(packers-test1:src/%=build/build-debug/src/%)
 
 check: packers $(packers-test)
 	$(CXX) $(CXXFLAGS) $(CriterionFLAGS) -o ./build/build-debug/packers-test $(packers-test)
@@ -21,7 +25,7 @@ check: packers $(packers-test)
 packers: $(obj)
 	$(CXX) $(CXXFLAGS) -o packers $^
 
-build/build-debug/%.cpp.o: src/%.cpp
+build/build-debug/%.cpp.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
@@ -31,9 +35,9 @@ clean:
 
 .PHONY: format
 format:
-	find src -name '*.hpp' -o -name '*.cpp' | xargs clang-format -i
+	find src tests -name '*.hpp' -o -name '*.cpp' | xargs clang-format -i
 
 fmt: format
 
 clang-tidy:
-	clang-tidy -p . -fix $(file) $(packers-test)
+	clang-tidy --config-file=.clang-tidy -p . -fix $(file) $(packers-test-src)

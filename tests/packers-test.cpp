@@ -1,6 +1,6 @@
+#include "project/file.hpp"
 #include <criterion/criterion.h>
 #include <string>
-#include "project/file.hpp"
 
 Test(files, parseEmptyFile)
 {

@@ -5,7 +5,7 @@
 Test(files, parseEmptyFile)
 {
   std::string const fileContent;
-  auto const package = packers::file::parsePackage(fileContent);
+  auto const package = packers::file::parseProject(fileContent);
   cr_assert(not(package.has_value()));
 }
 
@@ -18,7 +18,7 @@ Test(files, parsePackageSection)
     version = "0.1.0"
     authors = ""
   )";
-  auto const package = packers::file::parsePackage(fileContent);
+  auto const package = packers::file::parseProject(fileContent);
   cr_assert(package.has_value());
   auto const &pkg = package.value();
   cr_assert_eq(pkg.name, "name of package");
@@ -34,7 +34,7 @@ Test(files, parsePackageSectionOptional)
     name = "name of package"
     version = "0.1.0"
   )";
-  auto const package = packers::file::parsePackage(fileContent);
+  auto const package = packers::file::parseProject(fileContent);
   cr_assert(package.has_value());
   auto const &pkg = package.value();
   cr_assert_eq(pkg.name, "name of package");
@@ -43,4 +43,30 @@ Test(files, parsePackageSectionOptional)
   cr_assert_eq(pkg.authors, "");
 }
 
-// Test(files, parse)
+Test(files, parseBuildDirDefault)
+{
+  std::string const fileContent = R"(
+    [package]
+    name = "name of package"
+    version = "0.1.0"
+  )";
+  auto const package = packers::file::parseProject(fileContent);
+  cr_assert(package.has_value());
+  auto const &pkg = package.value();
+  cr_assert_eq(pkg.build.dir, "build");
+}
+
+Test(files, parseBuildDirNotDefault)
+{
+  std::string const fileContent = R"(
+    [package]
+    name = "name of package"
+    version = "0.1.0"
+    [build]
+    build-dir = "buildDir"
+  )";
+  auto const package = packers::file::parseProject(fileContent);
+  cr_assert(package.has_value());
+  auto const &pkg = package.value();
+  cr_assert_eq(pkg.build.dir, "buildDir");
+}

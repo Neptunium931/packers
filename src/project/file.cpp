@@ -5,10 +5,32 @@
 #include <string_view>
 #include <toml++/toml.hpp>
 
-namespace packers::file
+namespace
 {
 auto
-parsePackage(const std::string_view &fileContent) -> std::optional<Package>
+parseBuild(const std::string_view &fileContent) -> packers::file::Build
+{
+  toml::table toml;
+  try
+  {
+    toml = toml::parse(fileContent);
+  }
+  catch (const toml::parse_error &e)
+  {
+    std::cerr << "Error parsing package file: " << e << "\n";
+  }
+  auto buildDir = toml["build"]["build-dir"].value_or<std::string>("build");
+  packers::file::Build buildInstance = { .dir = buildDir };
+
+  return buildInstance;
+}
+}
+
+namespace packers::file
+{
+
+auto
+parseProject(const std::string_view &fileContent) -> std::optional<Package>
 {
   toml::table toml;
   try
@@ -34,9 +56,12 @@ parsePackage(const std::string_view &fileContent) -> std::optional<Package>
     std::cerr << "Package version is empty\n";
     return std::nullopt;
   }
-  return Package{ .name = name.value_or(""),
-                  .description = description.value_or(""),
-                  .version = version.value_or(""),
-                  .authors=authors.value_or("") };
+  auto const build = parseBuild(fileContent);
+  auto packers = Package{ .name = name.value(),
+                          .description = description.value_or(""),
+                          .version = version.value(),
+                          .authors = authors.value_or(""),
+                          .build = build };
+  return std::optional<Package>{ packers };
 }
 } // namespace packers::file

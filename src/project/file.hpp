@@ -5,16 +5,21 @@
 #include <string_view>
 namespace packers::file
 {
+struct Build
+{
+  std::string dir;
+};
+
 struct Package
 {
   std::string name;
   std::string description;
   std::string version;
   std::string authors;
+  Build build;
 };
 
-auto parsePackage(const std::string_view &fileContent)
+auto parseProject(const std::string_view &fileContent)
   -> std::optional<Package>;
 } // namespace packers::file
-
 #endif

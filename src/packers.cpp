@@ -3,7 +3,7 @@
 auto
 main() -> int
 {
-  std::string const fileContent = "";
-  auto const package = packers::file::parsePackage(fileContent);
+  std::string const fileContent{};
+  auto const package = packers::file::parseProject(fileContent);
   return 0;
 }

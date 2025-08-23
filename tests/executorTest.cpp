@@ -17,3 +17,18 @@ Test(executor, initExecutorWithError)
   cr_assert_eq(result.getError(), "hello\n");
   cr_assert_eq(result.getCode(), 0);
 }
+
+Test(executor, initExecutorWithExitCode)
+{
+  auto const result = packers::Executor::run(std::string{ "cat /" });
+  cr_assert_eq(result.getCode(), 1);
+}
+
+Test(executor, initExecutorWithOutputAndError)
+{
+  auto const result = packers::Executor::run(
+    std::string{ "echo 'hello' 1>&2; echo 'world'" });
+  cr_assert_eq(result.getOutput(), "world\n");
+  cr_assert_eq(result.getError(), "hello\n");
+  cr_assert_eq(result.getCode(), 0);
+}

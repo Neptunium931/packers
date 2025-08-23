@@ -16,10 +16,9 @@ main() -> int
     build-dir = "build"
   )";
   auto const package = packers::file::parseProject(fileContent);
-  auto const result = packers::Executor::run("echo 'hello'");
-  if (result)
-  {
-    std::cout << result->getOutput() << "\n";
-  }
+  auto const result = packers::Executor::run("cat /etc/os-releas");
+  std::cout << result.getOutput() << "\n";
+  std::cout << result.getError() << "\n";
+  std::cout << result.getCode() << "\n";
   return 0;
 }

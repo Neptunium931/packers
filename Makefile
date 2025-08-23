@@ -7,13 +7,17 @@ CXXFLAGS += -I ./src
 CriterionFLAGS = -lcriterion
 
 file := src/packers.cpp \
-				src/project/file.cpp
+				src/project/file.cpp \
+				src/executor/executor.cpp \
+				src/util.cpp
 obj := $(file:.cpp=.cpp.o)
 obj := $(obj:src/%=build/build-debug/src/%)
 
 packers-test-src := tests/packers-test.cpp \
 								tests/executorTest.cpp \
-								src/project/file.cpp
+								src/project/file.cpp \
+								src/executor/executor.cpp \
+								src/util.cpp
 packers-test2 = $(packers-test-src:.cpp=.cpp.o)
 packers-test1 = $(packers-test2:tests/%=build/build-debug/tests/%)
 packers-test = $(packers-test1:src/%=build/build-debug/src/%)

@@ -1,6 +1,7 @@
 #include "executor.hpp"
 #include "util.hpp"
 #include <array>
+#include <cstring>
 #include <spawn.h>
 #include <string_view>
 #include <sys/fcntl.h>
@@ -63,17 +64,64 @@ run(const std::string &command) -> CompletedProcess
   // NOLINTEND(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 
   posix_spawn_file_actions_t action;
-  // TODO: Check return value
   int err = posix_spawn_file_actions_init(&action);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn_file_actions_init failed %s", strerror(err));
+  }
   err = posix_spawn_file_actions_addopen(&action, 0, "/dev/null", O_RDONLY, 0);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn_file_actions_addopen failed %s", strerror(err));
+  }
 
   err = posix_spawn_file_actions_adddup2(&action, stdoutFd[1], 1);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn_file_actions_adddup2 failed %s", strerror(err));
+  }
   err = posix_spawn_file_actions_adddup2(&action, stderrFd[1], 2);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn_file_actions_adddup2 failed %s", strerror(err));
+  }
 
   err = posix_spawn_file_actions_addclose(&action, stdoutFd[1]);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn_file_actions_addclose failed %s", strerror(err));
+  }
   err = posix_spawn_file_actions_addclose(&action, stdoutFd[0]);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn_file_actions_addclose failed %s", strerror(err));
+  }
   err = posix_spawn_file_actions_addclose(&action, stderrFd[1]);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn_file_actions_addclose failed %s", strerror(err));
+  }
   err = posix_spawn_file_actions_addclose(&action, stderrFd[0]);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn_file_actions_addclose failed %s", strerror(err));
+  }
 
   // NOLINTNEXTLINE(*-avoid-c-arrays)
   const char *spawnedArgs[] = { "/bin/sh", "-c", command.c_str(), nullptr };

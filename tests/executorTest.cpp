@@ -3,7 +3,8 @@
 
 Test(executor, initExecutorWithOutput)
 {
-  auto const result = packers::Executor::runSync(std::string{ "echo 'hello'" });
+  auto const result =
+    packers::Executor::runSync(std::string{ "echo 'hello'" });
   cr_assert_eq(result.getOutput(), "hello\n");
   cr_assert_eq(result.getError(), "");
   cr_assert_eq(result.getCode(), 0);
@@ -26,8 +27,8 @@ Test(executor, initExecutorWithExitCode)
 
 Test(executor, initExecutorWithOutputAndError)
 {
-  auto const result =
-    packers::Executor::runSync(std::string{ "echo 'hello' 1>&2; echo 'world'" });
+  auto const result = packers::Executor::runSync(
+    std::string{ "echo 'hello' 1>&2; echo 'world'" });
   cr_assert_eq(result.getOutput(), "world\n");
   cr_assert_eq(result.getError(), "hello\n");
   cr_assert_eq(result.getCode(), 0);

@@ -1,6 +1,5 @@
 #ifndef EXECUTOR_HPP
 #define EXECUTOR_HPP
-#include <optional>
 #include <string>
 #include <string_view>
 namespace packers::Executor
@@ -22,6 +21,6 @@ public:
   [[nodiscard]] auto getError() const -> std::string_view;
   [[nodiscard]] auto getCode() const -> int;
 };
-auto run(const std::string &command) -> CompletedProcess;
+auto runSync(const std::string &command) -> RunningProcess;
 };
 #endif // EXECUTOR_HPP

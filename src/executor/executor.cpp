@@ -51,7 +51,7 @@ CompletedProcess::getCode() const -> int
 }
 
 auto
-run(const std::string &command) -> CompletedProcess
+runSync(const std::string &command) -> CompletedProcess
 {
   pid_t pid{};
   // NOLINTBEGIN(*-avoid-c-arrays)

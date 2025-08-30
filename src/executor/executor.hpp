@@ -43,6 +43,7 @@ public:
   }
   [[nodiscard]] auto getCommand() const -> std::string_view;
   [[nodiscard]] auto getPid() const -> int;
+  [[nodiscard]] auto isFinished() -> bool;
   [[nodiscard]] auto isFinished() const -> bool;
   [[nodiscard]] auto getStdoutFd() const -> int;
   [[nodiscard]] auto getStderrFd() const -> int;

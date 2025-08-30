@@ -63,6 +63,20 @@ RunningProcess::getPid() const -> int
 }
 
 auto
+RunningProcess::isFinished() -> bool
+{
+  if (isFinish)
+  {
+    return true;
+  }
+  int status{};
+  waitpid(pid, &status, 0);
+  auto isFinished = WIFEXITED(status) || WIFSIGNALED(status);
+  this->isFinish = isFinished;
+  return isFinished;
+}
+
+auto
 RunningProcess::isFinished() const -> bool
 {
   if (isFinish)

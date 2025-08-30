@@ -36,10 +36,11 @@ Test(executor, initExecutorWithOutputAndError)
 
 Test(executor, ExecutorAsync)
 {
-  auto const process =
+  auto process =
     packers::Executor::runAsync(std::string{ "echo 'hello'" });
   auto const result = packers::Executor::waitToFinish(process);
   cr_assert_eq(result.getOutput(), "hello\n");
   cr_assert_eq(result.getError(), "");
   cr_assert_eq(result.getCode(), 0);
+  cr_assert(process.isFinished());
 }

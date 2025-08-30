@@ -36,8 +36,7 @@ Test(executor, initExecutorWithOutputAndError)
 
 Test(executor, ExecutorAsync)
 {
-  auto process =
-    packers::Executor::runAsync(std::string{ "echo 'hello'" });
+  auto process = packers::Executor::runAsync(std::string{ "echo 'hello'" });
   auto const result = packers::Executor::waitToFinish(process);
   cr_assert_eq(result.getOutput(), "hello\n");
   cr_assert_eq(result.getError(), "");

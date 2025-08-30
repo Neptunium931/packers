@@ -51,8 +51,52 @@ CompletedProcess::getCode() const -> int
 }
 
 auto
+RunningProcess::getCommand() const -> std::string_view
+{
+  return command;
+}
+
+auto
+RunningProcess::getPid() const -> int
+{
+  return pid;
+}
+
+auto
+RunningProcess::isFinished() const -> bool
+{
+  if (isFinish)
+  {
+    return true;
+  }
+  int status{};
+  waitpid(pid, &status, 0);
+  return WIFEXITED(status) || WIFSIGNALED(status);
+}
+
+auto
+RunningProcess::getStdoutFd() const -> int
+{
+  return stdoutFd;
+}
+
+auto
+RunningProcess::getStderrFd() const -> int
+{
+  return stderrFd;
+}
+
+auto
 runSync(const std::string &command) -> CompletedProcess
 {
+  auto const process = runAsync(command);
+  return waitToFinish(process);
+}
+
+auto
+runAsync(const std::string &command) -> RunningProcess
+{
+
   pid_t pid{};
   // NOLINTBEGIN(*-avoid-c-arrays)
   int stdoutFd[2]{};
@@ -132,28 +176,48 @@ runSync(const std::string &command) -> CompletedProcess
                     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
                     const_cast<char **>(spawnedArgs),
                     environ);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn failed %s", strerror(err));
+  }
   err = posix_spawn_file_actions_destroy(&action);
+  if (err != 0)
+  {
+    // concurrency-mt-unsafe error fix in clang-tidy 21
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    fatal("posix_spawn_file_actions_destroy failed %s", strerror(err));
+  }
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
+  return RunningProcess{ command, pid, *stdoutFd, *stderrFd };
+}
+
+auto
+waitToFinish(const RunningProcess &process) -> CompletedProcess
+{
+
   int status{};
   do // NOLINT(cppcoreguidelines-avoid-do-while)
   {
-    waitpid(pid, &status, 0);
+    waitpid(process.getPid(), &status, 0);
   } while (!WIFEXITED(status) && !WIFSIGNALED(status));
   fd_set readfds;
   FD_ZERO(&readfds);
-  FD_SET(stdoutFd[0], &readfds);
-  FD_SET(stderrFd[0], &readfds);
-  int maxFd = std::max(stdoutFd[0], stderrFd[0]) + 1;
+  FD_SET(process.getStdoutFd(), &readfds);
+  FD_SET(process.getStderrFd(), &readfds);
+  int maxFd = std::max(process.getStdoutFd(), process.getStderrFd()) + 1;
   select(maxFd, &readfds, nullptr, nullptr, nullptr);
   std::string outString{};
   std::string errString{};
-  if (FD_ISSET(stdoutFd[0], &readfds))
+  if (FD_ISSET(process.getStdoutFd(), &readfds))
   {
-    outString = readFd(stdoutFd[0]);
+    outString = readFd(process.getStdoutFd());
   }
-  if (FD_ISSET(stderrFd[0], &readfds))
+  if (FD_ISSET(process.getStderrFd(), &readfds))
   {
-    errString = readFd(stderrFd[0]);
+    errString = readFd(process.getStderrFd());
   }
-  return { outString, errString, WEXITSTATUS(status) };
+  return CompletedProcess{ outString, errString, WEXITSTATUS(status) };
 }
 }

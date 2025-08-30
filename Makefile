@@ -13,7 +13,7 @@ file := src/packers.cpp \
 obj := $(file:.cpp=.cpp.o)
 obj := $(obj:src/%=build/build-debug/src/%)
 
-packers-test-src := tests/packers-test.cpp \
+packers-test-src := tests/packersTest.cpp \
 								tests/executorTest.cpp \
 								src/project/file.cpp \
 								src/executor/executor.cpp \

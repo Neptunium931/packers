@@ -1,7 +1,7 @@
 #include "executor/executor.hpp"
 #include <criterion/criterion.h>
 
-Test(executor, initExecutorWithOutput)
+Test(executor, ExecutorWithOutput)
 {
   auto const result =
     packers::Executor::runSync(std::string{ "echo 'hello'" });
@@ -10,7 +10,7 @@ Test(executor, initExecutorWithOutput)
   cr_assert_eq(result.getCode(), 0);
 }
 
-Test(executor, initExecutorWithError)
+Test(executor, ExecutorWithError)
 {
   auto const result =
     packers::Executor::runSync(std::string{ "echo 'hello' 1>&2" });
@@ -19,13 +19,13 @@ Test(executor, initExecutorWithError)
   cr_assert_eq(result.getCode(), 0);
 }
 
-Test(executor, initExecutorWithExitCode)
+Test(executor, ExecutorWithExitCode)
 {
   auto const result = packers::Executor::runSync(std::string{ "cat /" });
   cr_assert_eq(result.getCode(), 1);
 }
 
-Test(executor, initExecutorWithOutputAndError)
+Test(executor, ExecutorWithOutputAndError)
 {
   auto const result = packers::Executor::runSync(
     std::string{ "echo 'hello' 1>&2; echo 'world'" });

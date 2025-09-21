@@ -20,8 +20,7 @@ readFd(int fileDescriptor) -> std::string
   std::string out;
   while ((bytesRead = read(fileDescriptor, buffer.data(), bufferSize - 1)) > 0)
   {
-    // NOLINTNEXTLINE (cppcoreguidelines-pro-bounds-pointer-arithmetic)
-    buffer[bytesRead] = '\0';
+    buffer.at(bytesRead) = '\0';
     out.append(buffer.data());
     if (bytesRead < sizeof(buffer) - 1)
     {

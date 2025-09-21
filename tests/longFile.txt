@@ -1,53 +1,4 @@
-#include "executor/executor.hpp"
-#include <criterion/criterion.h>
-
-Test(executor, ExecutorWithOutput)
-{
-  auto const result =
-    packers::Executor::runSync(std::string{ "echo 'hello'" });
-  cr_assert_eq(result.getOutput(), "hello\n");
-  cr_assert_eq(result.getError(), "");
-  cr_assert_eq(result.getCode(), 0);
-}
-
-Test(executor, ExecutorWithError)
-{
-  auto const result =
-    packers::Executor::runSync(std::string{ "echo 'hello' 1>&2" });
-  cr_assert_eq(result.getOutput(), "");
-  cr_assert_eq(result.getError(), "hello\n");
-  cr_assert_eq(result.getCode(), 0);
-}
-
-Test(executor, ExecutorWithExitCode)
-{
-  auto const result = packers::Executor::runSync(std::string{ "cat /" });
-  cr_assert_eq(result.getCode(), 1);
-}
-
-Test(executor, ExecutorWithOutputAndError)
-{
-  auto const result = packers::Executor::runSync(
-    std::string{ "echo 'hello' 1>&2; echo 'world'" });
-  cr_assert_eq(result.getOutput(), "world\n");
-  cr_assert_eq(result.getError(), "hello\n");
-  cr_assert_eq(result.getCode(), 0);
-}
-
-Test(executor, ExecutorAsync)
-{
-  auto process = packers::Executor::runAsync(std::string{ "echo 'hello'" });
-  auto const result = packers::Executor::waitToFinish(process);
-  cr_assert_eq(result.getOutput(), "hello\n");
-  cr_assert_eq(result.getError(), "");
-  cr_assert_eq(result.getCode(), 0);
-  cr_assert(process.isFinished());
-}
-
-Test(executor, ExecutorWithLongOutput)
-{
-  const auto *fileContent =
-    R"(OSx/Xgha7DJcf1lfFvaF3C22aw4VjHsv4EjjB8KJYemNljRaVkLe0uIL20T4efMOiG69tSHGjsJM
+OSx/Xgha7DJcf1lfFvaF3C22aw4VjHsv4EjjB8KJYemNljRaVkLe0uIL20T4efMOiG69tSHGjsJM
 8izQvGo66AuLSneMtHwkvdv9jpJ9DW8aar9/Jq+fXWLjE5MScoUZ2vDe5DCUG7EGCjvzReemUfug
 e+E1ZowyjMzsP8BBSxhBpBy8u2DCyx3Uw4zWXFI6wXmiQpAdx2XqmpjO0JnliB/oT03KVcl29Eo2
 m4fAni+43ZaXFcf+xCEuEaNZZlKb6fUklfnogwEFzLYqmKFMBPvtSynAXiYjIyxc+ZJvqPEwF6TP
@@ -82,10 +33,4 @@ jbVwhhr3Q6y82INT7fouq2iVUDxz8Gga3rNRxgRD9sJG16f92n/1IifaUARB6MhnRZIC+2jpHDbJ
 +5ieEHCH9lZci3a0akB4esSU/zNZP3cNBSflrJEY85UEGvRObn14W/ynnkOLEq9z+kYGAtUSpVLe
 PeR+U226FxVqf/9o2vDbtcCiRpnPhDFqc2m7qcDdYDQGam4lTob7xf/OaIROzDdUyXP9iLimXTMR
 ta6ib/PZ/FMWj8O7SfwGjdRbsbBwuQUIou+lkRI6nIto5jgidppKI6hdVPOdr/jwPu7wsD2oy/xX
-38nhWkGTCT1iG4E/ao+q2hIf5AXd0aCmi2puS7MhxMUtA3Ltv9NBu0fLm7xgjMRw3Q+dkHM=)";
-  auto const result =
-    packers::Executor::runSync(std::string{ "cat tests/longFile.txt" });
-  cr_assert(result.getOutput().compare(fileContent));
-  cr_assert_eq(result.getError(), "");
-  cr_assert_eq(result.getCode(), 0);
-}
+38nhWkGTCT1iG4E/ao+q2hIf5AXd0aCmi2puS7MhxMUtA3Ltv9NBu0fLm7xgjMRw3Q+dkHM=

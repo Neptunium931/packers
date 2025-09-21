@@ -1,4 +1,5 @@
 #include "executor/executor.hpp"
+#include "executor/service.hpp"
 #include "project/file.hpp"
 #include <iostream>
 #include <string>
@@ -16,7 +17,15 @@ main() -> int
     build-dir = "build"
   )";
   auto const package = packers::file::parseProject(fileContent);
-  auto const result = packers::Executor::runSync("cat /etc/os-releas");
+  auto service = packers::Executor::Service({
+    "cat /etc/os-release",
+    "echo 'hello'",
+  });
+  service.run();
+  service.await();
+
+  auto const result =
+    packers::Executor::runSync(std::string{ "cat /etc/ssh/sshd_config" });
   std::cout << result.getOutput() << "\n";
   std::cout << result.getError() << "\n";
   std::cout << result.getCode() << "\n";

@@ -1,4 +1,8 @@
 #include "service.hpp"
+#include <vector>
+#include <string>
+#include <utility>
+#include "executor/executor.hpp"
 
 namespace packers::Executor
 {

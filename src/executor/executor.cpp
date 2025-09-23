@@ -1,13 +1,20 @@
 #include "executor.hpp"
 #include "util.hpp"
+#include <algorithm>
 #include <array>
 #include <cstring>
+#include <fcntl.h>
 #include <spawn.h>
+// NOLINTNEXTLINE
+#include <stdlib.h>
+#include <string>
 #include <string_view>
 #include <sys/fcntl.h>
+#include <sys/select.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <utility>
 
 namespace
 {
@@ -255,7 +262,7 @@ waitToFinish(const RunningProcess &process) -> CompletedProcess
   FD_ZERO(&readfds);
   FD_SET(process.getStdoutFd(), &readfds);
   FD_SET(process.getStderrFd(), &readfds);
-  int maxFd = std::max(process.getStdoutFd(), process.getStderrFd()) + 1;
+  int const maxFd = std::max(process.getStdoutFd(), process.getStderrFd()) + 1;
   select(maxFd, &readfds, nullptr, nullptr, nullptr);
   std::string outString{};
   std::string errString{};

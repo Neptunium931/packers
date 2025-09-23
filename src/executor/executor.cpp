@@ -49,6 +49,42 @@ CompletedProcess::getCode() const -> int
   return code;
 }
 
+RunningProcess::RunningProcess(RunningProcess &&other) noexcept
+  : command(std::move(other.command))
+  , pid(other.pid)
+  , stdoutFd(other.stdoutFd)
+  , stderrFd(other.stderrFd)
+{
+  other.pid = -1;
+  other.stdoutFd = -1;
+  other.stderrFd = -1;
+}
+
+auto
+RunningProcess::operator=(RunningProcess &&other) noexcept -> RunningProcess &
+{
+  this->command = std::move(other.command);
+  this->pid = other.pid;
+  this->stdoutFd = other.stdoutFd;
+  this->stderrFd = other.stderrFd;
+  other.pid = -1;
+  other.stdoutFd = -1;
+  other.stderrFd = -1;
+  return *this;
+}
+
+RunningProcess::~RunningProcess()
+{
+  if (stdoutFd != -1)
+  {
+    close(stdoutFd);
+  }
+  if (stderrFd != -1)
+  {
+    close(stderrFd);
+  }
+}
+
 auto
 RunningProcess::getCommand() const -> std::string_view
 {

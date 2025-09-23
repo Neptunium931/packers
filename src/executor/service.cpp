@@ -39,7 +39,7 @@ Service::run() -> void
 auto
 Service::await() -> void
 {
-  for (auto &process : processesRuning)
+  for (auto const &process : processesRuning)
   {
     auto result = packers::Executor::waitToFinish(process);
     processesCompleted.push(std::move(result));

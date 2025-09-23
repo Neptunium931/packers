@@ -41,6 +41,11 @@ public:
     , stderrFd(stderrFd)
   {
   }
+  explicit RunningProcess(RunningProcess &&) noexcept;
+  auto operator=(RunningProcess &&) noexcept -> RunningProcess &;
+  RunningProcess(const RunningProcess &) = delete;
+  auto operator=(const RunningProcess &) -> RunningProcess & = delete;
+  ~RunningProcess();
   [[nodiscard]] auto getCommand() const -> std::string_view;
   [[nodiscard]] auto getPid() const -> int;
   [[nodiscard]] auto isFinished() -> bool;

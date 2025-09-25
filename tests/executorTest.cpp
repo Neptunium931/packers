@@ -82,10 +82,11 @@ jbVwhhr3Q6y82INT7fouq2iVUDxz8Gga3rNRxgRD9sJG16f92n/1IifaUARB6MhnRZIC+2jpHDbJ
 +5ieEHCH9lZci3a0akB4esSU/zNZP3cNBSflrJEY85UEGvRObn14W/ynnkOLEq9z+kYGAtUSpVLe
 PeR+U226FxVqf/9o2vDbtcCiRpnPhDFqc2m7qcDdYDQGam4lTob7xf/OaIROzDdUyXP9iLimXTMR
 ta6ib/PZ/FMWj8O7SfwGjdRbsbBwuQUIou+lkRI6nIto5jgidppKI6hdVPOdr/jwPu7wsD2oy/xX
-38nhWkGTCT1iG4E/ao+q2hIf5AXd0aCmi2puS7MhxMUtA3Ltv9NBu0fLm7xgjMRw3Q+dkHM=)";
+38nhWkGTCT1iG4E/ao+q2hIf5AXd0aCmi2puS7MhxMUtA3Ltv9NBu0fLm7xgjMRw3Q+dkHM=
+)";
   auto const result =
     packers::Executor::runSync(std::string{ "cat tests/longFile.txt" });
-  cr_assert(result.getOutput().compare(fileContent));
+  cr_assert_not(result.getOutput().compare(fileContent));
   cr_assert_eq(result.getError(), "");
   cr_assert_eq(result.getCode(), 0);
 }

@@ -7,7 +7,7 @@ authors = ""
 [dependencies]
 foo = { path = "path/to/foo" }
 bar = { git = "git url", branch = "branch name"  } # branch or tag
-baz = { tarball = "url to tarball" dir = "name of directory" }
+baz = { tarball = "url to tarball", dir = "name of directory" }
 # libabc = "1.0.0" # TODO custon resgitry
 
 [dependencie.foo]
@@ -22,7 +22,6 @@ env = { a = "value of a" }
 build-dir = "build"
 build-dir-debug = "build/debug"
 build-dir-release = "build/release"
-build-dir-* = "build/{build.profile}"
 
 [build.env]
 # by default find
@@ -30,13 +29,6 @@ CC = "gcc"
 CXX = "g++"
 
 [build.args]
-"-Wall"
-"-Wextra"
-
-[build.args.debug]
-"-g"
-"-O0"
-
-[build.args.release]
-"-O3"
-"-Werror"
+all = ["-Wall", "-Wextra"]
+debug = ["-g", "-O0"]
+release = ["-O3", "-Werror"]

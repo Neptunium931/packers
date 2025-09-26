@@ -1,33 +1,49 @@
 #include "executor/executor.hpp"
 #include "executor/service.hpp"
 #include "project/file.hpp"
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <string>
+
+namespace
+{
+auto
+readFile(std::string const &fileName) -> std::optional<std::string>
+{
+  std::ifstream file(fileName);
+  if (!file.is_open())
+  {
+    return std::nullopt;
+  }
+  std::stringstream buffer;
+  buffer << file.rdbuf();
+  return buffer.str();
+}
+}
+
 auto
 main() -> int
 {
-  std::string const fileContent = R"(
-    [package]
-    name = "test"
-    version = "0.1.0"
-    description = "test"
-    authors = "neptunium"
-
-    [build]
-    build-dir = "build"
-  )";
+  auto const fileContent = readFile("packers.toml").value();
   auto const package = packers::file::parseProject(fileContent);
-  auto service = packers::Executor::Service({
-    "cat /etc/os-release",
-    "echo 'hello'",
-  });
-  service.run();
-  service.await();
-
-  auto const result =
-    packers::Executor::runSync(std::string{ "cat /etc/ssh/sshd_config" });
-  std::cout << result.getOutput() << "\n";
-  std::cout << result.getError() << "\n";
-  std::cout << result.getCode() << "\n";
+  if (!package.has_value())
+  {
+    std::cerr << "Failed to parse project file\n";
+    return 1;
+  }
+  try
+  {
+    std::filesystem::create_directories(std::filesystem::path{
+                                          package->build.dir,
+                                        } /
+                                        "debug");
+  }
+  catch (std::filesystem::filesystem_error const &e)
+  {
+    std::cerr << "Failed to create build directory\n";
+    std::cerr << e.what() << '\n';
+    return 1;
+  }
   return 0;
 }

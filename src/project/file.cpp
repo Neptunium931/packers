@@ -46,6 +46,7 @@ parseProject(const std::string_view &fileContent) -> std::optional<Package>
   auto description = toml["package"]["description"].value<std::string>();
   auto version = toml["package"]["version"].value<std::string>();
   auto authors = toml["package"]["authors"].value<std::string>();
+  auto standard = toml["package"]["standard"].value<std::string>();
   if (!name || name->empty())
   {
     std::cerr << "Package name is empty\n";
@@ -61,6 +62,7 @@ parseProject(const std::string_view &fileContent) -> std::optional<Package>
                           .description = description.value_or(""),
                           .version = version.value(),
                           .authors = authors.value_or(""),
+                          .standard = standard.value_or("c++23"),
                           .build = build };
   return std::optional<Package>{ packers };
 }

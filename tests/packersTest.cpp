@@ -70,3 +70,23 @@ Test(files, parseBuildDirNotDefault)
   auto const &pkg = package.value();
   cr_assert_eq(pkg.build.dir, "buildDir");
 }
+
+Test(files, parsePackageStandard)
+{
+  std::string const fileContent = R"(
+    [package]
+    name = "name of package"
+    description = ""
+    version = "0.1.0"
+    authors = ""
+    standard = "c++17"
+  )";
+  auto const package = packers::file::parseProject(fileContent);
+  cr_assert(package.has_value());
+  auto const &pkg = package.value();
+  cr_assert_eq(pkg.name, "name of package");
+  cr_assert_eq(pkg.description, "");
+  cr_assert_eq(pkg.version, "0.1.0");
+  cr_assert_eq(pkg.authors, "");
+  cr_assert_eq(pkg.standard, "c++17");
+}

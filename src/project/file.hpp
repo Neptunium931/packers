@@ -16,6 +16,7 @@ struct Package
   std::string description;
   std::string version;
   std::string authors;
+  std::string standard;
   Build build;
 };
 

@@ -1,0 +1,17 @@
+[package]
+name = "name of package"
+description = ""
+version = "0.1.0"
+authors = ""
+standard = "c++23"
+
+[build]
+build-dir = "build"
+
+[build.env]
+CXX = "g++"
+
+[build.args]
+all = ["-Wall", "-Wextra"]
+debug = ["-g", "-O0"]
+release = ["-O3", "-Werror"]

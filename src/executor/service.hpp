@@ -14,6 +14,8 @@ class Service
 
 public:
   explicit Service(std::vector<std::string> commands);
+  explicit Service(std::string commands);
+  explicit Service() = default;
   auto submit(const std::string &command) -> void;
   auto getCompletedProcesses()
     -> std::vector<packers::Executor::CompletedProcess>;

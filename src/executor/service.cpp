@@ -11,6 +11,11 @@ Service::Service(std::vector<std::string> commands)
 {
 }
 
+Service::Service(std::string commands)
+  : Service(std::vector<std::string>{ std::move(commands) })
+{
+}
+
 auto
 Service::submit(const std::string &command) -> void
 {

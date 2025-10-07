@@ -263,7 +263,10 @@ waitToFinish(const RunningProcess &process) -> CompletedProcess
   FD_SET(process.getStdoutFd(), &readfds);
   FD_SET(process.getStderrFd(), &readfds);
   int const maxFd = std::max(process.getStdoutFd(), process.getStderrFd()) + 1;
-  select(maxFd, &readfds, nullptr, nullptr, nullptr);
+  struct timeval timeout{};
+  constexpr auto timeoutInUsec = 10;
+  timeout.tv_usec = timeoutInUsec;
+  select(maxFd, &readfds, nullptr, nullptr, &timeout);
   std::string outString{};
   std::string errString{};
   if (FD_ISSET(process.getStdoutFd(), &readfds))

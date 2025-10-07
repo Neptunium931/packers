@@ -1,9 +1,10 @@
 #include "executor/service.hpp"
 #include <criterion/criterion.h>
+#include <string>
 
 Test(service, ServiceRunAndAwait)
 {
-  auto service = packers::Executor::Service({ "echo 'hello'" });
+  auto service = packers::Executor::Service(std::string{ "echo 'hello'" });
   service.run();
   service.await();
   auto completedProcesses = service.getCompletedProcesses();
@@ -15,7 +16,7 @@ Test(service, ServiceRunAndAwait)
 
 Test(service, ServiceRunAwait)
 {
-  auto service = packers::Executor::Service({ "echo 'hello'" });
+  auto service = packers::Executor::Service(std::string{ "echo 'hello'" });
   service.runAwait();
   auto completedProcesses = service.getCompletedProcesses();
   cr_assert_eq(completedProcesses.size(), 1);

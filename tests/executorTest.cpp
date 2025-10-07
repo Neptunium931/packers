@@ -90,3 +90,12 @@ ta6ib/PZ/FMWj8O7SfwGjdRbsbBwuQUIou+lkRI6nIto5jgidppKI6hdVPOdr/jwPu7wsD2oy/xX
   cr_assert_eq(result.getError(), "");
   cr_assert_eq(result.getCode(), 0);
 }
+
+Test(executor, noOutput)
+{
+  auto const result =
+    packers::Executor::runSync(std::string{ "pwd > /dev/null" });
+  cr_assert_eq(result.getOutput(), "");
+  cr_assert_eq(result.getError(), "");
+  cr_assert_eq(result.getCode(), 0);
+}

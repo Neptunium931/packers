@@ -99,3 +99,12 @@ Test(executor, noOutput)
   cr_assert_eq(result.getError(), "");
   cr_assert_eq(result.getCode(), 0);
 }
+
+Test(executor, longRunningCommand)
+{
+  auto const result =
+    packers::Executor::runSync(std::string{ "sleep 2 && echo 'hello'" });
+  cr_assert_eq(result.getOutput(), "hello\n");
+  cr_assert_eq(result.getError(), "");
+  cr_assert_eq(result.getCode(), 0);
+}

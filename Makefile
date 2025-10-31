@@ -19,7 +19,6 @@ packers-test-src := tests/packersTest.cpp \
 								tests/serviceTest.cpp \
 								src/project/file.cpp \
 								src/executor/executor.cpp \
-								src/util.cpp \
 								src/executor/service.cpp
 packers-test2 = $(packers-test-src:.cpp=.cpp.o)
 packers-test1 = $(packers-test2:tests/%=build/build-debug/tests/%)

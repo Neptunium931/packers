@@ -1,4 +1,8 @@
 #include "executor/executor.hpp"
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#endif
 #include <criterion/criterion.h>
 
 #pragma GCC diagnostic push

@@ -1,5 +1,12 @@
 #include "executor/service.hpp"
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#endif
 #include <criterion/criterion.h>
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 #include <string>
 
 #pragma GCC diagnostic push

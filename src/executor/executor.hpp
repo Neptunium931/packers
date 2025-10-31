@@ -26,9 +26,9 @@ class RunningProcess
 {
   std::string command;
   int pid;
-  bool isFinish = false;
   int stdoutFd;
   int stderrFd;
+  bool isFinish = false;
 
 public:
   explicit RunningProcess(std::string tCommand,

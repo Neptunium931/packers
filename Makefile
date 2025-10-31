@@ -1,7 +1,7 @@
 CXX ?= clang++
 CXXFLAGS = -std=c++23 -Wall -Wextra -Werror -pedantic -g
 CXXFLAGS += -I ./vendor/argparse/include/
-CXXFLAGS += -I ./vendor/tomlplusplus/include/
+CXXFLAGS += -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/
 CXXFLAGS += -I ./src
 
 CriterionFLAGS = -lcriterion
@@ -36,9 +36,13 @@ else
 endif
 
 ifeq ($(CXX),clang++)
-	CXXFLAGS += -Weverything
-	CXXFLAGS += -Wno-c++98-compat
-	CXXFLAGS += -Wno-c++98-compat-extra-semi
+	CXXFLAGS += -Weverything \
+							-Wno-c++98-compat \
+							-Wno-c++98-compat-extra-semi \
+							-Wno-c++98-compat-pedantic \
+							-Wno-documentation-unknown-command \
+							-Wno-error=padded
+
 else
 	CXXFLAGS += -Werror \
 							-Wshadow \

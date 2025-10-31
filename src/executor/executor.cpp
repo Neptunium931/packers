@@ -250,6 +250,8 @@ runAsync(const std::string &command) -> RunningProcess
   return RunningProcess{ command, pid, *stdoutFd, *stderrFd };
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunsafe-buffer-usage"
 auto
 waitToFinish(const RunningProcess &process) -> CompletedProcess
 {
@@ -280,4 +282,5 @@ waitToFinish(const RunningProcess &process) -> CompletedProcess
   }
   return CompletedProcess{ outString, errString, WEXITSTATUS(status) };
 }
+#pragma GCC diagnostic pop
 }

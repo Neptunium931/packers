@@ -1,0 +1,23 @@
+name: C++ Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu]
+        arch: [x86_64, x86, arm64]
+        compiler: [g++, clang++]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libcriterion-dev
+
+      - name: Build and run tests
+        run: |
+          make check CXX=${{ matrix.compiler }}

@@ -1,0 +1,21 @@
+name: Workflow for Codecov nCook
+on: [push, pull_request]
+jobs:
+  run-gcc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libcriterion-dev
+
+      - name: Compile and run tests
+        run: make check CODECOV=1
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

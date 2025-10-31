@@ -1,7 +1,7 @@
-CXX = clang++
-CXXFLAGS = -std=c++23 -Wall -Wextra -O0 -g
-CXXFLAGS += -I ./build/build-debug/dependencies/argparse/include
-CXXFLAGS += -I ./build/build-debug/dependencies/tomlplusplus/include
+CXX ?= clang++
+CXXFLAGS = -std=c++23 -Wall -Wextra -g
+CXXFLAGS += -I ./vendor/argparse/include/
+CXXFLAGS += -I ./vendor/tomlplusplus/include/
 CXXFLAGS += -I ./src
 
 CriterionFLAGS = -lcriterion
@@ -25,9 +25,23 @@ packers-test2 = $(packers-test-src:.cpp=.cpp.o)
 packers-test1 = $(packers-test2:tests/%=build/build-debug/tests/%)
 packers-test = $(packers-test1:src/%=build/build-debug/src/%)
 
-check: packers $(packers-test)
+ifdef CODECOV
+	CXXFLAGS += --coverage
+endif
+
+ifdef OPTIMIZE
+	CXXFLAGS += -O3
+else
+	CXXFLAGS += -O0
+endif
+
+check: packers $(packers-test) example
 	$(CXX) $(CXXFLAGS) $(CriterionFLAGS) -o ./build/build-debug/packers-test $(packers-test)
 	./build/build-debug/packers-test --tap
+
+.PHONY: example
+example: packers
+	./example/run.sh
 
 packers: $(obj)
 	$(CXX) $(CXXFLAGS) -o packers $^

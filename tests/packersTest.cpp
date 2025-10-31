@@ -2,6 +2,8 @@
 #include <criterion/criterion.h>
 #include <string>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
 Test(files, parseEmptyFile)
 {
   std::string const fileContent;
@@ -90,3 +92,4 @@ Test(files, parsePackageStandard)
   cr_assert_eq(pkg.authors, "");
   cr_assert_eq(pkg.standard, "c++17");
 }
+#pragma GCC diagnostic pop

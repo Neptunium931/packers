@@ -1,6 +1,8 @@
 #include "executor/executor.hpp"
 #include <criterion/criterion.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
 Test(executor, ExecutorWithOutput)
 {
   auto const result =
@@ -108,3 +110,4 @@ Test(executor, longRunningCommand)
   cr_assert_eq(result.getError(), "");
   cr_assert_eq(result.getCode(), 0);
 }
+#pragma GCC diagnostic pop

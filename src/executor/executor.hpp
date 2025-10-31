@@ -11,10 +11,10 @@ class CompletedProcess
   int code;
 
 public:
-  explicit CompletedProcess(std::string output, std::string error, int code)
-    : output(std::move(output))
-    , error(std::move(error))
-    , code(code)
+  explicit CompletedProcess(std::string tOutput, std::string tError, int tCode)
+    : output(std::move(tOutput))
+    , error(std::move(tError))
+    , code(tCode)
   {
   }
   [[nodiscard]] auto getOutput() const -> std::string_view;
@@ -31,14 +31,14 @@ class RunningProcess
   int stderrFd;
 
 public:
-  explicit RunningProcess(std::string command,
-                          int pid,
-                          int stdoutFd,
-                          int stderrFd)
-    : command(std::move(command))
-    , pid(pid)
-    , stdoutFd(stdoutFd)
-    , stderrFd(stderrFd)
+  explicit RunningProcess(std::string tCommand,
+                          int tPid,
+                          int tStdoutFd,
+                          int tStderrFd)
+    : command(std::move(tCommand))
+    , pid(tPid)
+    , stdoutFd(tStdoutFd)
+    , stderrFd(tStderrFd)
   {
   }
   explicit RunningProcess(RunningProcess &&) noexcept;

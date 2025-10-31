@@ -25,7 +25,8 @@ readFd(int fileDescriptor) -> std::string
   std::array<char, bufferSize> buffer{};
   size_t bytesRead{};
   std::string out;
-  while ((bytesRead = read(fileDescriptor, buffer.data(), bufferSize - 1)) > 0)
+  while ((bytesRead = static_cast<size_t>(
+            read(fileDescriptor, buffer.data(), bufferSize - 1))) > 0)
   {
     buffer.at(bytesRead) = '\0';
     out.append(buffer.data());

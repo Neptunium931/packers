@@ -25,13 +25,13 @@ readFile(std::string const &fileName) -> std::optional<std::string>
 auto
 main() -> int
 {
-  constexpr auto fileName = "packers.toml";
-  if (!std::filesystem::exists(fileName))
+  constexpr auto configFileName = "packers.toml";
+  if (!std::filesystem::exists(configFileName))
   {
-    std::cerr << "Project file " << fileName << " does not exist\n";
+    std::cerr << "Project file " << configFileName << " does not exist\n";
     return 1;
   }
-  auto const fileContent = readFile(fileName).value();
+  auto const fileContent = readFile(configFileName).value();
   auto const package = packers::file::parseProject(fileContent);
   if (!package.has_value())
   {

@@ -1,5 +1,5 @@
 CXX ?= clang++
-CXXFLAGS = -std=c++23 -Wall -Wextra -g
+CXXFLAGS = -std=c++23 -Wall -Wextra -Werror -pedantic -g
 CXXFLAGS += -I ./vendor/argparse/include/
 CXXFLAGS += -I ./vendor/tomlplusplus/include/
 CXXFLAGS += -I ./src
@@ -33,6 +33,31 @@ ifdef OPTIMIZE
 	CXXFLAGS += -O3
 else
 	CXXFLAGS += -O0
+endif
+
+ifeq ($(CXX),clang++)
+	CXXFLAGS += -Weverything
+	CXXFLAGS += -Wno-c++98-compat
+	CXXFLAGS += -Wno-c++98-compat-extra-semi
+else
+	CXXFLAGS += -Werror \
+							-Wshadow \
+							-Wnon-virtual-dtor \
+							-Wold-style-cast \
+							-Wcast-align \
+							-Wunused \
+							-Woverloaded-virtual \
+							-Wpedantic \
+							-Wconversion \
+							-Wsign-conversion \
+							-Wmisleading-indentation \
+							-Wduplicated-cond \
+							-Wduplicated-branches \
+							-Wlogical-op \
+							-Wnull-dereference \
+							-Wuseless-cast \
+							-Wdouble-promotion \
+							-Wformat=2
 endif
 
 check: packers $(packers-test) example

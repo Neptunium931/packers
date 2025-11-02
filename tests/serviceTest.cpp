@@ -1,14 +1,13 @@
 #include "executor/service.hpp"
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmissing-variable-declarations"
-#endif
 #include <criterion/criterion.h>
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
 #include <string>
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+#pragma clang diagnostic add "-Wall"
+#pragma clang diagnostic add "-Wextra"
+#endif
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 Test(service, ServiceRunAndAwait)
@@ -34,3 +33,6 @@ Test(service, ServiceRunAwait)
   cr_assert_eq(completedProcesses[0].getError(), "");
 }
 #pragma GCC diagnostic pop
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif

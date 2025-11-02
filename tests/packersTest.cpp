@@ -1,14 +1,13 @@
 #include "project/file.hpp"
+#include <criterion/criterion.h>
+#include <string>
+
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Weverything"
+#pragma clang diagnostic add "-Wall"
+#pragma clang diagnostic add "-Wextra"
 #endif
-#include <criterion/criterion.h>
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-#include <string>
-
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 Test(files, parseEmptyFile)
@@ -100,3 +99,6 @@ Test(files, parsePackageStandard)
   cr_assert_eq(pkg.standard, "c++17");
 }
 #pragma GCC diagnostic pop
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif

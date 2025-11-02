@@ -1,10 +1,12 @@
 #include "executor/executor.hpp"
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmissing-variable-declarations"
-#endif
 #include <criterion/criterion.h>
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+#pragma clang diagnostic add "-Wall"
+#pragma clang diagnostic add "-Wextra"
+#endif
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 Test(executor, ExecutorWithOutput)
@@ -115,3 +117,7 @@ Test(executor, longRunningCommand)
   cr_assert_eq(result.getCode(), 0);
 }
 #pragma GCC diagnostic pop
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif

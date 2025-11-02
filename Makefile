@@ -60,7 +60,8 @@ else
 							-Wnull-dereference \
 							-Wuseless-cast \
 							-Wdouble-promotion \
-							-Wformat=2
+							-Wformat=2 \
+							-Wnrvo
 endif
 
 check: packers $(packers-test) example

@@ -9,7 +9,7 @@ jobs:
       matrix:
         os: [ubuntu]
         arch: [x86_64, x86, arm64]
-        compiler: [g++-14, clang++-19]
+        compiler: [g++-14, clang++-18]
 
     steps:
       - name: Checkout code
@@ -18,7 +18,7 @@ jobs:
           submodules: true
 
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y libcriterion-dev llvm-toolchain-19
+        run: sudo apt-get update && sudo apt-get install -y libcriterion-dev
 
       - name: Build and run tests
         run: |

@@ -33,7 +33,7 @@ else
 	CXXFLAGS += -O0
 endif
 
-ifeq ($(CXX),clang++)
+ifeq ($(findstring clang++, $(CXX)), clang++)
 	CXXFLAGS += -Weverything \
 							-Wno-c++98-compat \
 							-Wno-c++98-compat-extra-semi \

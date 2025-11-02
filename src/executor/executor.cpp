@@ -150,6 +150,10 @@ runSync(const std::string &command) -> CompletedProcess
   return waitToFinish(process);
 }
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+#endif
 auto
 runAsync(const std::string &command) -> RunningProcess
 {
@@ -168,9 +172,9 @@ runAsync(const std::string &command) -> RunningProcess
   int err = posix_spawn_file_actions_init(&action);
   if (err != 0)
   {
-    // concurrency-mt-unsafe error fix in clang-tidy 21
-    // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::cerr << std::format("posix_spawn_file_actions_init failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
                              strerror(err));
     // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::exit(1);
@@ -178,9 +182,9 @@ runAsync(const std::string &command) -> RunningProcess
   err = posix_spawn_file_actions_addopen(&action, 0, "/dev/null", O_RDONLY, 0);
   if (err != 0)
   {
-    // concurrency-mt-unsafe error fix in clang-tidy 21
-    // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::cerr << std::format("posix_spawn_file_actions_addopen failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
                              strerror(err));
     // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::exit(1);
@@ -189,9 +193,9 @@ runAsync(const std::string &command) -> RunningProcess
   err = posix_spawn_file_actions_adddup2(&action, stdoutFd[1], 1);
   if (err != 0)
   {
-    // concurrency-mt-unsafe error fix in clang-tidy 21
-    // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::cerr << std::format("posix_spawn_file_actions_adddup2 failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
                              strerror(err));
     // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::exit(1);
@@ -199,9 +203,9 @@ runAsync(const std::string &command) -> RunningProcess
   err = posix_spawn_file_actions_adddup2(&action, stderrFd[1], 2);
   if (err != 0)
   {
-    // concurrency-mt-unsafe error fix in clang-tidy 21
-    // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::cerr << std::format("posix_spawn_file_actions_adddup2 failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
                              strerror(err));
     // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::exit(1);
@@ -210,9 +214,9 @@ runAsync(const std::string &command) -> RunningProcess
   err = posix_spawn_file_actions_addclose(&action, stdoutFd[1]);
   if (err != 0)
   {
-    // concurrency-mt-unsafe error fix in clang-tidy 21
-    // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::cerr << std::format("posix_spawn_file_actions_addclose failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
                              strerror(err));
     // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::exit(1);
@@ -220,9 +224,9 @@ runAsync(const std::string &command) -> RunningProcess
   err = posix_spawn_file_actions_addclose(&action, stdoutFd[0]);
   if (err != 0)
   {
-    // concurrency-mt-unsafe error fix in clang-tidy 21
-    // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::cerr << std::format("posix_spawn_file_actions_addclose failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
                              strerror(err));
     // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::exit(1);
@@ -230,9 +234,9 @@ runAsync(const std::string &command) -> RunningProcess
   err = posix_spawn_file_actions_addclose(&action, stderrFd[1]);
   if (err != 0)
   {
-    // concurrency-mt-unsafe error fix in clang-tidy 21
-    // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::cerr << std::format("posix_spawn_file_actions_addclose failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
                              strerror(err));
     // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::exit(1);
@@ -240,9 +244,9 @@ runAsync(const std::string &command) -> RunningProcess
   err = posix_spawn_file_actions_addclose(&action, stderrFd[0]);
   if (err != 0)
   {
-    // concurrency-mt-unsafe error fix in clang-tidy 21
-    // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::cerr << std::format("posix_spawn_file_actions_addclose failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
                              strerror(err));
     // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::exit(1);
@@ -268,9 +272,9 @@ runAsync(const std::string &command) -> RunningProcess
   err = posix_spawn_file_actions_destroy(&action);
   if (err != 0)
   {
-    // concurrency-mt-unsafe error fix in clang-tidy 21
-    // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::cerr << std::format("posix_spawn_file_actions_destroy failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
                              strerror(err));
     // NOLINTNEXTLINE(concurrency-mt-unsafe)
     std::exit(1);
@@ -278,6 +282,9 @@ runAsync(const std::string &command) -> RunningProcess
   // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
   return RunningProcess{ command, pid, *stdoutFd, *stderrFd };
 }
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
 #ifdef __clang__
 #pragma clang diagnostic push

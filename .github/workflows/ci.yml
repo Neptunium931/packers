@@ -9,7 +9,7 @@ jobs:
       matrix:
         os: [ubuntu]
         arch: [x86_64, x86, arm64]
-        compiler: [g++, clang++]
+        compiler: [g++-14, clang++]
 
     steps:
       - name: Checkout code

@@ -9,7 +9,6 @@ CriterionFLAGS = -lcriterion
 file := src/packers.cpp \
 				src/project/file.cpp \
 				src/executor/executor.cpp \
-				src/util.cpp \
 				src/executor/service.cpp
 obj := $(file:.cpp=.cpp.o)
 obj := $(obj:src/%=build/build-debug/src/%)

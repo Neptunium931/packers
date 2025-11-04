@@ -124,6 +124,13 @@ Test(executor, multiIsfinished)
   cr_assert(process.isFinished());
 }
 
+Test(executor, RunAsyncConstProcess)
+{
+  auto const process =
+    packers::Executor::runAsync(std::string{ "echo 'hello'" });
+  cr_assert(process.isFinished());
+}
+
 #pragma GCC diagnostic pop
 
 #ifdef __clang__

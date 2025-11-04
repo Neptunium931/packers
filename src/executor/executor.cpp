@@ -122,10 +122,6 @@ RunningProcess::isFinished() -> bool
 auto
 RunningProcess::isFinished() const -> bool
 {
-  if (isFinish)
-  {
-    return true;
-  }
   int status{};
   waitpid(pid, &status, 0);
   return WIFEXITED(status) || WIFSIGNALED(status);

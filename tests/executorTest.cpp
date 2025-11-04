@@ -116,6 +116,14 @@ Test(executor, longRunningCommand)
   cr_assert_eq(result.getError(), "");
   cr_assert_eq(result.getCode(), 0);
 }
+
+Test(executor, multiIsfinished)
+{
+  auto process = packers::Executor::runAsync(std::string{ "echo 'hello'" });
+  cr_assert(process.isFinished());
+  cr_assert(process.isFinished());
+}
+
 #pragma GCC diagnostic pop
 
 #ifdef __clang__

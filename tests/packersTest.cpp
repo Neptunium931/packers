@@ -139,6 +139,17 @@ Test(files, parseNotVersion)
   cr_assert(not(package.has_value()));
 }
 
+Test(files, parseEmptyVersion)
+{
+  std::string const fileContent = R"(
+    [package]
+    name = "name of package"
+    version = ""
+  )";
+  auto const package = packers::file::parseProject(fileContent);
+  cr_assert(not(package.has_value()));
+}
+
 #pragma GCC diagnostic pop
 #ifdef __clang__
 #pragma clang diagnostic pop

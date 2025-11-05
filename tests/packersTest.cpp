@@ -118,6 +118,17 @@ Test(files, parseNotName)
   cr_assert(not(package.has_value()));
 }
 
+Test(files, parseEmptyName)
+{
+  std::string const fileContent = R"(
+    [package]
+    name = ""
+    version = "0.1.0"
+  )";
+  auto const package = packers::file::parseProject(fileContent);
+  cr_assert(not(package.has_value()));
+}
+
 Test(files, parseNotVersion)
 {
   std::string const fileContent = R"(

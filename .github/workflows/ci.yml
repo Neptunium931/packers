@@ -12,6 +12,7 @@ jobs:
         os: [ubuntu]
         arch: [x86_64, x86, arm64]
         compiler: [g++-14, clang++-18]
+        optimize: [0, 1]
 
     steps:
       - name: Checkout code
@@ -24,4 +25,4 @@ jobs:
 
       - name: Build and run tests
         run: |
-          make check CXX=${{ matrix.compiler }}
+          make check CXX=${{ matrix.compiler }} OPTIMIZE=${{ matrix.optimize }}

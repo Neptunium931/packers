@@ -18,7 +18,8 @@ packers-test-src := tests/packersTest.cpp \
 								tests/serviceTest.cpp \
 								src/project/file.cpp \
 								src/executor/executor.cpp \
-								src/executor/service.cpp
+								src/executor/service.cpp \
+								tests/exampleTest.cpp
 packers-test2 = $(packers-test-src:.cpp=.cpp.o)
 packers-test1 = $(packers-test2:tests/%=build/build-debug/tests/%)
 packers-test = $(packers-test1:src/%=build/build-debug/src/%)
@@ -63,13 +64,9 @@ else
 							-Wnrvo
 endif
 
-check: packers $(packers-test) example
+check: packers $(packers-test)
 	$(CXX) $(CXXFLAGS) $(CriterionFLAGS) -o ./build/build-debug/packers-test $(packers-test)
 	./build/build-debug/packers-test --tap
-
-.PHONY: example
-example: packers
-	./example/run.sh
 
 packers: $(obj)
 	$(CXX) $(CXXFLAGS) -o packers $^

@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <iostream>
 #include <string>
+using namespace std::literals;
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -51,8 +52,8 @@ Test(example, noPackers_toml)
   auto const command = baseComand(path);
 
   auto const result = packers::Executor::runSync(std::string{ command });
-  cr_assert(
-    result.getOutput().compare("Project file packers.toml does not exist\n"));
+  cr_assert(result.getError() ==
+            "Project file packers.toml does not exist\n"sv);
   cr_assert(result.getCode() == 1);
 }
 
@@ -62,8 +63,28 @@ Test(example, emptyPackers_toml)
   auto const command = baseComand(path);
 
   auto const result = packers::Executor::runSync(std::string{ command });
-  cr_assert(result.getOutput().compare("Failed to parse project file\n"));
+  cr_assert(result.getError() ==
+            "Package name is empty\nFailed to parse project file\n"sv);
   cr_assert(result.getCode() == 1);
+}
+
+Test(example, noReadPackers_toml)
+{
+  auto path = std::filesystem::path{ "example/noReadPackers_toml" };
+  std::filesystem::permissions(path / "packers.toml",
+                               std::filesystem::perms::none);
+  auto const command = baseComand(path);
+
+  auto const result = packers::Executor::runSync(std::string{ command });
+  std::cout << result.getOutput() << '\n';
+  cr_assert(result.getError() ==
+            "Package name is empty\nFailed to parse project file\n"sv);
+  cr_assert(result.getCode() == 1);
+  std::filesystem::permissions(path / "packers.toml",
+                               std::filesystem::perms::owner_read |
+                                 std::filesystem::perms::owner_write |
+                                 std::filesystem::perms::group_read |
+                                 std::filesystem::perms::others_read);
 }
 
 #pragma GCC diagnostic pop

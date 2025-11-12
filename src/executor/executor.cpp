@@ -160,12 +160,30 @@ runAsync(const std::string &command) -> RunningProcess
   int stderrFd[2]{};
   // NOLINTEND(*-avoid-c-arrays)
   // NOLINTBEGIN(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
-  pipe(stdoutFd);
-  pipe(stderrFd);
+  int err = pipe(stdoutFd);
+  if (err != 0)
+  {
+    std::cerr << std::format("pipe failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
+                             strerror(err));
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    std::exit(1);
+  }
+  err = pipe(stderrFd);
+  if (err != 0)
+  {
+    std::cerr << std::format("pipe failed {}\n",
+                             // concurrency-mt-unsafe error fix in clang-tidy
+                             // 21 NOLINTNEXTLINE(concurrency-mt-unsafe)
+                             strerror(err));
+    // NOLINTNEXTLINE(concurrency-mt-unsafe)
+    std::exit(1);
+  }
   // NOLINTEND(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 
   posix_spawn_file_actions_t action;
-  int err = posix_spawn_file_actions_init(&action);
+  err = posix_spawn_file_actions_init(&action);
   if (err != 0)
   {
     std::cerr << std::format("posix_spawn_file_actions_init failed {}\n",

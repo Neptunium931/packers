@@ -44,6 +44,16 @@ Test(example, multiFile)
   auto const result = packers::Executor::runSync(std::string{ command });
   cr_assert(result.getCode() == 0);
 }
+
+Test(example, noPackers_toml)
+{
+  auto path = std::filesystem::path{ "example/noPackers_toml" };
+  auto const command = baseComand(path);
+
+  auto const result = packers::Executor::runSync(std::string{ command });
+  cr_assert(result.getCode() == 1);
+}
+
 #pragma GCC diagnostic pop
 
 #ifdef __clang__

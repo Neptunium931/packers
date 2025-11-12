@@ -56,6 +56,16 @@ Test(example, noPackers_toml)
   cr_assert(result.getCode() == 1);
 }
 
+Test(example, emptyPackers_toml)
+{
+  auto path = std::filesystem::path{ "example/emptyPackers_toml" };
+  auto const command = baseComand(path);
+
+  auto const result = packers::Executor::runSync(std::string{ command });
+  cr_assert(result.getOutput().compare("Failed to parse project file\n"));
+  cr_assert(result.getCode() == 1);
+}
+
 #pragma GCC diagnostic pop
 
 #ifdef __clang__

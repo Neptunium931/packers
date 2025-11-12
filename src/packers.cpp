@@ -31,7 +31,7 @@ main() -> int
     std::cerr << "Project file " << configFileName << " does not exist\n";
     return 1;
   }
-  auto const fileContent = readFile(configFileName).value();
+  auto const fileContent = readFile(configFileName).value_or("");
   auto const package = packers::file::parseProject(fileContent);
   if (!package.has_value())
   {

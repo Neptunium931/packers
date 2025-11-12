@@ -51,6 +51,8 @@ Test(example, noPackers_toml)
   auto const command = baseComand(path);
 
   auto const result = packers::Executor::runSync(std::string{ command });
+  cr_assert(
+    result.getOutput().compare("Project file packers.toml does not exist\n"));
   cr_assert(result.getCode() == 1);
 }
 

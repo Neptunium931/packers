@@ -150,6 +150,16 @@ Test(files, parseEmptyVersion)
   cr_assert(not(package.has_value()));
 }
 
+Test(files, parseInvalidToml)
+{
+  std::string const fileContent = R"(
+    [package]
+    name =
+  )";
+  auto const package = packers::file::parseProject(fileContent);
+  cr_assert(not(package.has_value()));
+}
+
 #pragma GCC diagnostic pop
 #ifdef __clang__
 #pragma clang diagnostic pop

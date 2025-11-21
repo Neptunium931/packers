@@ -32,16 +32,17 @@ main() -> int
     return 1;
   }
   auto const fileContent = readFile(configFileName).value_or("");
-  auto const package = packers::file::parseProject(fileContent);
-  if (!package.has_value())
+  auto const packageOpt = packers::file::parseProject(fileContent);
+  if (!packageOpt.has_value())
   {
     std::cerr << "Failed to parse project file\n";
     return 1;
   }
+  auto const &package = packageOpt.value();
   try
   {
     std::filesystem::create_directories(std::filesystem::path{
-                                          package->build.dir,
+                                          package.build.dir,
                                         } /
                                         "debug");
   }
@@ -70,28 +71,27 @@ main() -> int
     {
       runner.submit(
         std::string{ "clang++" }
-          .append(" -std=" + package->standard)
+          .append(" -std=" + package.standard)
           .append(" -Isrc")
           .append(" -Iinclude")
           .append(" -Wall")
           .append(" -Wextra")
           .append(" -O0")
           .append(" -g")
-          .append(" -o " + package->build.dir + "/" + fileName + ".o")
+          .append(" -o " + package.build.dir + "/" + fileName + ".o")
           .append(" -c src/" + fileName));
-      objFiles.push_back(package->build.dir + "/" + fileName + ".o");
+      objFiles.push_back(package.build.dir + "/" + fileName + ".o");
       std::cout << "Compiled " << fileName << " to " << fileName << ".o\n";
     }
   }
   runner.runAwait();
-  auto linkCommand =
-    std::string{ "clang++" }
-      .append(" -std=" + package->standard)
-      .append(" -o " + package->build.dir + "/" + package->name)
-      .append(" -Wall")
-      .append(" -Wextra")
-      .append(" -O0")
-      .append(" -g");
+  auto linkCommand = std::string{ "clang++" }
+                       .append(" -std=" + package.standard)
+                       .append(" -o " + package.build.dir + "/" + package.name)
+                       .append(" -Wall")
+                       .append(" -Wextra")
+                       .append(" -O0")
+                       .append(" -g");
   std::cout << linkCommand << '\n';
   for (auto const &objFile : objFiles)
   {
@@ -105,7 +105,7 @@ main() -> int
     return 1;
   }
   std::cout << "Successfully built executable\n";
-  std::cout << "Executable: " << package->build.dir + "/" + package->name
+  std::cout << "Executable: " << package.build.dir + "/" + package.name
             << '\n';
   return 0;
 }

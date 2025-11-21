@@ -3,3 +3,4 @@ repos:
     rev: "v21.1.2"
     hooks:
       - id: clang-format
+        exclude_types: [json]

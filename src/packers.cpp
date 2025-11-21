@@ -59,6 +59,16 @@ main() -> int
   }
   auto runner = packers::Executor::Service{};
   auto objFiles = std::vector<std::string>{};
+  auto const buildArgs = []() -> std::string
+  {
+    return std::string{ "clang++" }
+      .append(" -Isrc")
+      .append(" -Iinclude")
+      .append(" -Wall")
+      .append(" -Wextra")
+      .append(" -O0")
+      .append(" -g");
+  };
   for (auto const &file : std::filesystem::directory_iterator("src"))
   {
     std::cout << "Processing " << file.path().filename() << '\n';
@@ -67,16 +77,6 @@ main() -> int
       continue;
     }
     auto const fileName = file.path().filename().string();
-    auto buildArgs = []() -> std::string
-    {
-      return std::string{ "clang++" }
-        .append(" -Isrc")
-        .append(" -Iinclude")
-        .append(" -Wall")
-        .append(" -Wextra")
-        .append(" -O0")
-        .append(" -g");
-    };
     if (fileName.ends_with(".cpp"))
     {
       runner.submit(

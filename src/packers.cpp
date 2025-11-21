@@ -67,17 +67,21 @@ main() -> int
       continue;
     }
     auto const fileName = file.path().filename().string();
+    auto buildArgs = []() -> std::string
+    {
+      return std::string{ "clang++" }
+        .append(" -Isrc")
+        .append(" -Iinclude")
+        .append(" -Wall")
+        .append(" -Wextra")
+        .append(" -O0")
+        .append(" -g");
+    };
     if (fileName.ends_with(".cpp"))
     {
       runner.submit(
-        std::string{ "clang++" }
+        buildArgs()
           .append(" -std=" + package.standard)
-          .append(" -Isrc")
-          .append(" -Iinclude")
-          .append(" -Wall")
-          .append(" -Wextra")
-          .append(" -O0")
-          .append(" -g")
           .append(" -o " + package.build.dir + "/" + fileName + ".o")
           .append(" -c src/" + fileName));
       objFiles.push_back(package.build.dir + "/" + fileName + ".o");

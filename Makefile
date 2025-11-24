@@ -86,4 +86,4 @@ format:
 fmt: format
 
 clang-tidy:
-	clang-tidy --config-file=.clang-tidy -p . --fix $(file)
+	clang-tidy --config-file=.clang-tidy -p . --fix $(packers-test-src) ./src/packers.cpp

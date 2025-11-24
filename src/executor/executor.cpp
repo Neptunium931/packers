@@ -1,8 +1,11 @@
 #include "executor.hpp"
 #include <algorithm>
 #include <array>
+#include <bits/types/struct_timeval.h>
+#include <cstdlib>
 #include <cstring>
 #include <fcntl.h>
+#include <format>
 #include <iostream>
 #include <spawn.h>
 // NOLINTNEXTLINE
@@ -267,7 +270,9 @@ runAsync(const std::string &command) -> RunningProcess
   }
 
   // NOLINTNEXTLINE(*-avoid-c-arrays)
-  const char *spawnedArgs[] = { "/bin/sh", "-c", command.c_str(), nullptr };
+  char const *const spawnedArgs[] = {
+    "/bin/sh", "-c", command.c_str(), nullptr
+  };
   err = posix_spawn(&pid,
                     "/bin/sh",
                     &action,

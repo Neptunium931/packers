@@ -1,6 +1,6 @@
 #include "project/file.hpp"
 #include <criterion/criterion.h>
-#include <string>
+#include <string_view>
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -12,14 +12,14 @@
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 Test(files, parseEmptyFile)
 {
-  std::string const fileContent;
+  constexpr std::string_view fileContent;
   auto const package = packers::file::parseProject(fileContent);
   cr_assert(not(package.has_value()));
 }
 
 Test(files, parsePackageSection)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     name = "name of package"
     description = ""
@@ -37,7 +37,7 @@ Test(files, parsePackageSection)
 
 Test(files, parsePackageSectionOptional)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     name = "name of package"
     version = "0.1.0"
@@ -53,7 +53,7 @@ Test(files, parsePackageSectionOptional)
 
 Test(files, parseBuildDirDefault)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     name = "name of package"
     version = "0.1.0"
@@ -66,7 +66,7 @@ Test(files, parseBuildDirDefault)
 
 Test(files, parseBuildDirNotDefault)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     name = "name of package"
     version = "0.1.0"
@@ -81,7 +81,7 @@ Test(files, parseBuildDirNotDefault)
 
 Test(files, parsePackageStandard)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     name = "name of package"
     description = ""
@@ -101,7 +101,7 @@ Test(files, parsePackageStandard)
 
 Test(files, parseEmptySection)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
   )";
   auto const package = packers::file::parseProject(fileContent);
@@ -110,7 +110,7 @@ Test(files, parseEmptySection)
 
 Test(files, parseNotName)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     version = "0.1.0"
   )";
@@ -120,7 +120,7 @@ Test(files, parseNotName)
 
 Test(files, parseEmptyName)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     name = ""
     version = "0.1.0"
@@ -131,7 +131,7 @@ Test(files, parseEmptyName)
 
 Test(files, parseNotVersion)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     name = "name of package"
   )";
@@ -141,7 +141,7 @@ Test(files, parseNotVersion)
 
 Test(files, parseEmptyVersion)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     name = "name of package"
     version = ""
@@ -152,7 +152,7 @@ Test(files, parseEmptyVersion)
 
 Test(files, parseInvalidToml)
 {
-  std::string const fileContent = R"(
+  constexpr std::string_view fileContent = R"(
     [package]
     name =
   )";

@@ -34,7 +34,7 @@ parseBuildArgs([[maybe_unused]] const std::string_view &fileContent)
                       return accumulator + " " + value.value_or("");
                     });
 
-  if (!all)
+  if (allArgs.empty())
   {
     return BuildArgs{ .all = "-Wall -Wextra" };
   }

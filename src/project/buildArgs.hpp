@@ -1,7 +1,7 @@
 #ifndef PACKERS_PROJECT_BUILDARGS_HPP
 #define PACKERS_PROJECT_BUILDARGS_HPP
 #include <string>
-#include <string_view>
+#include <toml++/toml.hpp>
 
 namespace packers::file
 {
@@ -10,7 +10,7 @@ struct BuildArgs
   std::string all;
 };
 
-auto parseBuildArgs(const std::string_view &fileContent) -> BuildArgs;
+auto parseBuildArgs(const toml::table &toml) -> BuildArgs;
 }
 
 #endif // PACKERS_PROJECT_BUILDARGS_HPP

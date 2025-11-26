@@ -8,18 +8,8 @@
 namespace packers::file
 {
 auto
-parseBuildArgs([[maybe_unused]] const std::string_view &fileContent)
-  -> BuildArgs
+parseBuildArgs(const toml::table &toml) -> BuildArgs
 {
-  toml::table toml;
-  try
-  {
-    toml = toml::parse(fileContent);
-  }
-  catch (const toml::parse_error &e)
-  {
-    std::cerr << "Error parsing package file: " << e << "\n";
-  }
   auto all = toml["build"]["args"]["all"];
   std::string const allArgs =
     std::accumulate(all.as_array()->begin(),

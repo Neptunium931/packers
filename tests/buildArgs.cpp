@@ -1,5 +1,6 @@
 #include "project/buildArgs.hpp"
 #include <criterion/criterion.h>
+#include <iostream>
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -9,6 +10,22 @@
 #endif
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
+
+constexpr auto parseToml =
+  [](const std::string_view &fileContent) -> toml::table
+{
+  toml::table toml;
+  try
+  {
+    toml = toml::parse(fileContent);
+  }
+  catch (const toml::parse_error &e)
+  {
+    std::cerr << "Error parsing package file: " << e << "\n";
+  }
+  return toml;
+};
+
 Test(buildArgs, simpleAllArgs)
 {
   constexpr std::string_view fileContent = R"(
@@ -21,7 +38,7 @@ Test(buildArgs, simpleAllArgs)
     all = ["-Wall", "-Wextra"]
   )";
 
-  auto const package = packers::file::parseBuildArgs(fileContent);
+  auto const package = packers::file::parseBuildArgs(parseToml(fileContent));
   cr_assert_eq(package.all, "-Wall -Wextra");
 }
 
@@ -37,7 +54,7 @@ Test(buildArgs, aOtherSimpleAllArgs)
     all = ["-Wall", "-Wextra", "-Werror", "-pedantic", "-g"]
   )";
 
-  auto const package = packers::file::parseBuildArgs(fileContent);
+  auto const package = packers::file::parseBuildArgs(parseToml(fileContent));
   cr_assert_eq(package.all, "-Wall -Wextra -Werror -pedantic -g");
 }
 
@@ -53,7 +70,7 @@ Test(buildArgs, defaultAllArgs)
     all = []
   )";
 
-  auto const package = packers::file::parseBuildArgs(fileContent);
+  auto const package = packers::file::parseBuildArgs(parseToml(fileContent));
   cr_assert_eq(package.all, "-Wall -Wextra");
 }
 

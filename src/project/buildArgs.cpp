@@ -11,6 +11,10 @@ auto
 parseBuildArgs(const toml::table &toml) -> BuildArgs
 {
   auto all = toml["build"]["args"]["all"];
+  if (!all.is_array())
+  {
+    return BuildArgs{ .all = "-Wall -Wextra" };
+  }
   std::string const allArgs =
     std::accumulate(all.as_array()->begin(),
                     all.as_array()->end(),
@@ -23,7 +27,6 @@ parseBuildArgs(const toml::table &toml) -> BuildArgs
                       }
                       return accumulator + " " + value.value_or("");
                     });
-
   if (allArgs.empty())
   {
     return BuildArgs{ .all = "-Wall -Wextra" };

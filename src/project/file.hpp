@@ -1,5 +1,6 @@
 #ifndef PROJECT_CONFIG_HPP
 #define PROJECT_CONFIG_HPP
+#include "project/buildArgs.hpp"
 #include <optional>
 #include <string>
 #include <string_view>
@@ -8,6 +9,7 @@ namespace packers::file
 struct Build
 {
   std::string dir;
+  BuildArgs args;
 };
 
 struct Package

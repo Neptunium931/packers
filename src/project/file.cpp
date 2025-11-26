@@ -1,4 +1,5 @@
 #include "project/file.hpp"
+#include "project/buildArgs.hpp"
 #include <iostream>
 #include <optional>
 #include <string>
@@ -11,7 +12,8 @@ auto
 parseBuild(const toml::table &toml) -> packers::file::Build
 {
   auto buildDir = toml["build"]["build-dir"].value_or<std::string>("build");
-  packers::file::Build buildInstance = { .dir = buildDir };
+  auto buildArgs = packers::file::parseBuildArgs(toml);
+  packers::file::Build buildInstance = { .dir = buildDir, .args = buildArgs };
 
   return buildInstance;
 }

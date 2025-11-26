@@ -8,17 +8,8 @@
 namespace
 {
 auto
-parseBuild(const std::string_view &fileContent) -> packers::file::Build
+parseBuild(const toml::table &toml) -> packers::file::Build
 {
-  toml::table toml;
-  try
-  {
-    toml = toml::parse(fileContent);
-  }
-  catch (const toml::parse_error &e)
-  {
-    std::cerr << "Error parsing package file: " << e << "\n";
-  }
   auto buildDir = toml["build"]["build-dir"].value_or<std::string>("build");
   packers::file::Build buildInstance = { .dir = buildDir };
 
@@ -57,7 +48,7 @@ parseProject(const std::string_view &fileContent) -> std::optional<Package>
     std::cerr << "Package version is empty\n";
     return std::nullopt;
   }
-  auto const build = parseBuild(fileContent);
+  auto const build = parseBuild(toml);
   auto packers = Package{ .name = name.value(),
                           .description = description.value_or(""),
                           .version = version.value(),

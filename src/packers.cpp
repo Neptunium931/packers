@@ -62,7 +62,7 @@ main() -> int
   }
   auto runner = packers::Executor::Service{};
   auto objFiles = std::vector<std::string>{};
-  auto const buildArgs = []() -> std::string
+  auto constexpr buildArgs = []() -> std::string
   {
     return std::string{ "clang++" }
       .append(" -Isrc")

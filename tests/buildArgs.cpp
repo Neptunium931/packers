@@ -74,6 +74,20 @@ Test(buildArgs, defaultAllArgs)
   cr_assert_eq(package.all, "-Wall -Wextra");
 }
 
+Test(buildArgs, noAllArgs)
+{
+  constexpr std::string_view fileContent = R"(
+    [package]
+    name = "name of package"
+    description = ""
+    version = "0.1.0"
+    authors = ""
+    [build.args]
+  )";
+
+  auto const package = packers::file::parseBuildArgs(parseToml(fileContent));
+  cr_assert_eq(package.all, "-Wall -Wextra");
+}
 #pragma GCC diagnostic pop
 #ifdef __clang__
 #pragma clang diagnostic pop

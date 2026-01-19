@@ -11,7 +11,7 @@ jobs:
       matrix:
         os: [ubuntu]
         arch: [x86_64, x86, arm64]
-        compiler: [g++-14, clang++-18]
+        compiler: [g++-15, clang++-21]
         optimize: [0, 1]
 
     steps:
@@ -22,6 +22,11 @@ jobs:
 
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y libcriterion-dev
+
+      - name: Install toolchain
+        if: matrix.os == 'ubuntu'
+        run: |
+          ./ci/setupToolchain.sh ${{ matrix.compiler }}
 
       - name: Build and run tests
         run: |

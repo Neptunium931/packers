@@ -14,8 +14,12 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y libcriterion-dev
 
+      - name: Install toolchain
+        run: |
+          ./ci/setupToolchain.sh gcc-15
+
       - name: Compile and run tests
-        run: make check CODECOV=1 CXX=g++-14
+        run: make check CODECOV=1 CXX=g++-15
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

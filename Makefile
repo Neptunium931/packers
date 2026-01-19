@@ -9,10 +9,15 @@ CriterionFLAGS = -lcriterion
 file := src/packers.cpp \
 				src/project/file.cpp \
 				src/executor/executor.cpp \
+				src/executor/executor.hpp \
 				src/executor/service.cpp \
-				src/project/buildArgs.cpp
+				src/executor/service.cpp \
+				src/project/buildArgs.cpp \
+				src/project/buildArgs.hpp
+header := $(file:%.hpp=%.hpp)
 obj := $(file:.cpp=.cpp.o)
 obj := $(obj:src/%=build/build-debug/src/%)
+obj := $(obj:%.hpp=)
 
 packers-test-src := tests/packersTest.cpp \
 								tests/executorTest.cpp \
@@ -67,14 +72,18 @@ else
 							-Wnrvo
 endif
 
-check: packers $(packers-test)
-	$(CXX) $(CXXFLAGS) $(CriterionFLAGS) -o ./build/build-debug/packers-test $(packers-test)
+check: packers $(packers-test) $(header)
+	$(CXX) $(CXXFLAGS) $(CriterionFLAGS) $(packers-test) -o ./build/build-debug/packers-test
 	./build/build-debug/packers-test --tap
 
 packers: $(obj)
-	$(CXX) $(CXXFLAGS) -o packers $^
+	$(CXX) $(CXXFLAGS) $^ -o packers
 
 build/build-debug/%.cpp.o: %.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+build/build-debug/%.cpp.h.o: %.cpp %.hpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 

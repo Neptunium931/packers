@@ -1,57 +1,42 @@
 [
     {
-        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Weverything -Wno-c++98-compat -Wno-c++98-compat-extra-semi -Wno-c++98-compat-pedantic -Wno-documentation-unknown-command -Wno-error=padded -o build/build-debug/src/packers.cpp.o src/packers.cpp",
-        "directory": "/home/user/dev/packers",
-        "file": "/home/user/dev/packers/src/packers.cpp"
+        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -fmodules -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Werror -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion -Wformat=2 -Wnrvo -o build/build-debug/src/packers.cpp.o src/packers.cpp",
+        "directory": "/home/neptunium/dev/packers",
+        "file": "/home/neptunium/dev/packers/src/packers.cpp"
     },
     {
-        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Weverything -Wno-c++98-compat -Wno-c++98-compat-extra-semi -Wno-c++98-compat-pedantic -Wno-documentation-unknown-command -Wno-error=padded -o build/build-debug/src/project/file.cpp.o src/project/file.cpp",
-        "directory": "/home/user/dev/packers",
-        "file": "/home/user/dev/packers/src/project/file.cpp"
+        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -fmodules -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Werror -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion -Wformat=2 -Wnrvo -o build/build-debug/src/project/file.cpp.o src/project/file.cpp",
+        "directory": "/home/neptunium/dev/packers",
+        "file": "/home/neptunium/dev/packers/src/project/file.cpp"
     },
     {
-        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Weverything -Wno-c++98-compat -Wno-c++98-compat-extra-semi -Wno-c++98-compat-pedantic -Wno-documentation-unknown-command -Wno-error=padded -o build/build-debug/src/executor/executor.cpp.o src/executor/executor.cpp",
-        "directory": "/home/user/dev/packers",
-        "file": "/home/user/dev/packers/src/executor/executor.cpp"
+        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -fmodules -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Werror -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion -Wformat=2 -Wnrvo -o build/build-debug/src/executor/executor.cpp.o src/executor/executor.cpp",
+        "directory": "/home/neptunium/dev/packers",
+        "file": "/home/neptunium/dev/packers/src/executor/executor.cpp"
     },
     {
-        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Weverything -Wno-c++98-compat -Wno-c++98-compat-extra-semi -Wno-c++98-compat-pedantic -Wno-documentation-unknown-command -Wno-error=padded -o build/build-debug/src/executor/service.cpp.o src/executor/service.cpp",
-        "directory": "/home/user/dev/packers",
-        "file": "/home/user/dev/packers/src/executor/service.cpp"
+        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -fmodules -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Werror -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion -Wformat=2 -Wnrvo -o build/build-debug/src/executor/service.cpp.o src/executor/service.cpp",
+        "directory": "/home/neptunium/dev/packers",
+        "file": "/home/neptunium/dev/packers/src/executor/service.cpp"
     },
     {
-        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Weverything -Wno-c++98-compat -Wno-c++98-compat-extra-semi -Wno-c++98-compat-pedantic -Wno-documentation-unknown-command -Wno-error=padded -o build/build-debug/tests/packersTest.cpp.o tests/packersTest.cpp",
-        "directory": "/home/user/dev/packers",
-        "file": "/home/user/dev/packers/tests/packersTest.cpp"
+        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -fmodules -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Werror -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion -Wformat=2 -Wnrvo -o build/build-debug/src/project/buildArgs.cpp.o src/project/buildArgs.cpp",
+        "directory": "/home/neptunium/dev/packers",
+        "file": "/home/neptunium/dev/packers/src/project/buildArgs.cpp"
     },
     {
-        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Weverything -Wno-c++98-compat -Wno-c++98-compat-extra-semi -Wno-c++98-compat-pedantic -Wno-documentation-unknown-command -Wno-error=padded -o build/build-debug/tests/executorTest.cpp.o tests/executorTest.cpp",
-        "directory": "/home/user/dev/packers",
-        "file": "/home/user/dev/packers/tests/executorTest.cpp"
+        "command": "c++ -c -Isrc -Iinclude -Wall -Wextra -O0 -g -std=c++23 -o build/fibo.cpp.o src/fibo.cpp",
+        "directory": "/home/neptunium/dev/packers/example/mutilFile",
+        "file": "/home/neptunium/dev/packers/example/mutilFile/src/fibo.cpp"
     },
     {
-        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Weverything -Wno-c++98-compat -Wno-c++98-compat-extra-semi -Wno-c++98-compat-pedantic -Wno-documentation-unknown-command -Wno-error=padded -o build/build-debug/tests/serviceTest.cpp.o tests/serviceTest.cpp",
-        "directory": "/home/user/dev/packers",
-        "file": "/home/user/dev/packers/tests/serviceTest.cpp"
+        "command": "c++ -c -Isrc -Iinclude -Wall -Wextra -O0 -g -std=c++23 -o build/hello.cpp.o src/hello.cpp",
+        "directory": "/home/neptunium/dev/packers/example/hello",
+        "file": "/home/neptunium/dev/packers/example/hello/src/hello.cpp"
     },
     {
-        "command": "c++ -c -std=c++23 -Wall -Wextra -Werror -pedantic -g -I ./vendor/argparse/include/ -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/ -I ./src -O0 -Weverything -Wno-c++98-compat -Wno-c++98-compat-extra-semi -Wno-c++98-compat-pedantic -Wno-documentation-unknown-command -Wno-error=padded -o build/build-debug/tests/exampleTest.cpp.o tests/exampleTest.cpp",
-        "directory": "/home/user/dev/packers",
-        "file": "/home/user/dev/packers/tests/exampleTest.cpp"
-    },
-    {
-        "command": "c++ -c -std=c++23 -Isrc -Iinclude -Wall -Wextra -O0 -g -o build/main.cpp.o src/main.cpp",
-        "directory": "/home/user/dev/packers/example/mutilFile",
-        "file": "/home/user/dev/packers/example/mutilFile/src/main.cpp"
-    },
-    {
-        "command": "c++ -c -std=c++23 -Isrc -Iinclude -Wall -Wextra -O0 -g -o build/fibo.cpp.o src/fibo.cpp",
-        "directory": "/home/user/dev/packers/example/mutilFile",
-        "file": "/home/user/dev/packers/example/mutilFile/src/fibo.cpp"
-    },
-    {
-        "command": "c++ -c -std=c++23 -Isrc -Iinclude -Wall -Wextra -O0 -g -o build/hello.cpp.o src/hello.cpp",
-        "directory": "/home/user/dev/packers/example/hello",
-        "file": "/home/user/dev/packers/example/hello/src/hello.cpp"
+        "command": "c++ -c -Isrc -Iinclude -Wall -Wextra -O0 -g -std=c++23 -o build/main.cpp.o src/main.cpp",
+        "directory": "/home/neptunium/dev/packers/example/mutilFile",
+        "file": "/home/neptunium/dev/packers/example/mutilFile/src/main.cpp"
     }
 ]

@@ -1,5 +1,5 @@
 CXX ?= clang++
-CXXFLAGS = -std=c++23 -Wall -Wextra -Werror -pedantic -g
+CXXFLAGS = -std=c++23 -Wall -Wextra -Werror -pedantic -g -fmodules
 CXXFLAGS += -I ./vendor/argparse/include/
 CXXFLAGS += -I ./vendor/tomlplusplus/include/ -isystem ./vendor/tomlplusplus/include/
 CXXFLAGS += -I ./src
@@ -72,11 +72,11 @@ else
 							-Wnrvo
 endif
 
-check: packers $(packers-test) $(header)
+check: packers $(packers-test) $(header) std.o
 	$(CXX) $(CXXFLAGS) $(CriterionFLAGS) $(packers-test) -o ./build/build-debug/packers-test
 	./build/build-debug/packers-test --tap
 
-packers: $(obj)
+packers: $(obj) std.o
 	$(CXX) $(CXXFLAGS) $^ -o packers
 
 build/build-debug/%.cpp.o: %.cpp
@@ -87,9 +87,13 @@ build/build-debug/%.cpp.h.o: %.cpp %.hpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+std.o: gcm.cache/std.gcm
+gcm.cache/std.gcm:
+	$(CXX) -std=c++23 -fmodules -fsearch-include-path -c bits/std.cc
+
 .PHONY: clean
 clean:
-	rm -f packers $(obj)
+	rm -f packers $(obj) gcm.cache/std.gcm std.o
 
 .PHONY: format
 format:

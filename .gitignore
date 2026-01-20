@@ -2,3 +2,5 @@ dependencies
 build
 .cache
 packers
+gcm.cache
+std.o

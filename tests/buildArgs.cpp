@@ -1,6 +1,7 @@
 #include "project/buildArgs.hpp"
 #include <criterion/criterion.h>
-#include <iostream>
+
+import std;
 
 #ifdef __clang__
 #pragma clang diagnostic push

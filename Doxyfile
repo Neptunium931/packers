@@ -1,0 +1,28 @@
+# Doxyfile 1.8.20
+
+# Project related configurations
+PROJECT_NAME           = packers
+PROJECT_BRIEF          =
+OUTPUT_DIRECTORY       = docs
+GENERATE_LATEX         = NO
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+
+# Input related configurations
+INPUT                  = src include tests
+FILE_PATTERNS         = *.cpp *.hpp
+RECURSIVE             = YES
+
+# Extraction options
+EXTRACT_ALL           = YES
+EXTRACT_PRIVATE       = YES
+EXTRACT_STATIC        = YES
+
+# Programming language settings
+OPTIMIZE_OUTPUT_FOR_C = YES
+
+# Source browsing
+GENERATE_TREE_VIEW    = YES
+
+# Enable indexing
+GENERATE_INDEX        = YES

@@ -18,9 +18,6 @@ EXTRACT_ALL           = YES
 EXTRACT_PRIVATE       = YES
 EXTRACT_STATIC        = YES
 
-# Programming language settings
-OPTIMIZE_OUTPUT_FOR_C = YES
-
 # Source browsing
 GENERATE_TREE_VIEW    = YES
 

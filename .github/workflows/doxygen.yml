@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Install Doxygen
-        run: sudo apt-get update && sudo apt-get install -y doxygen dot --no-install-recommends
+        run: sudo apt-get update && sudo apt-get install -y doxygen graphviz --no-install-recommends
       - name: Generate dock
         run: doxygen Doxyfile
       - name: Setup Pages

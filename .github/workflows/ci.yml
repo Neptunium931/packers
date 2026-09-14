@@ -11,7 +11,7 @@ jobs:
       matrix:
         os: [ubuntu]
         arch: [x86_64, x86, arm64]
-        compiler: [g++-15, clang++-21]
+        compiler: [g++-14, clang++-21]
         optimize: [0, 1]
 
     steps:

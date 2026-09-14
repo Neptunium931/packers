@@ -16,10 +16,10 @@ jobs:
 
       - name: Install toolchain
         run: |
-          ./ci/setupToolchain.sh gcc-15
+          ./ci/setupToolchain.sh gcc-14
 
       - name: Compile and run tests
-        run: make check CODECOV=1 CXX=g++-15
+        run: make check CODECOV=1 CXX=g++-14
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
